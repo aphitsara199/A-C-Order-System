@@ -39,7 +39,8 @@ for (const name of fs.readdirSync(path.join(root, 'pages')).filter(x => x.endsWi
   for (const match of html.matchAll(/(?:href|src)="([^"#]+)"/g)) {
     const ref = match[1];
     if (/^(?:https?:|data:|javascript:)/.test(ref)) continue;
-    if (!fs.existsSync(path.resolve(path.dirname(file), ref))) fail(`Missing reference: ${name} -> ${ref}`);
+    const localRef = ref.split(/[?#]/, 1)[0];
+    if (!fs.existsSync(path.resolve(path.dirname(file), localRef))) fail(`Missing reference: ${name} -> ${ref}`);
   }
 }
 const featureFiles = {
@@ -128,6 +129,7 @@ for (const [label,source,needle] of dataFlow) if (!source.includes(needle)) fail
 
 const customerLoginHtml = fs.readFileSync(path.join(root,'pages','Pakarang-Customer-Login.html'),'utf8');
 if (!customerLoginHtml.includes('href="A-C-Sales-Login.html"')) fail('Missing sales login entry on customer login page');
+if (!customerLoginHtml.includes('class="portal-divider"')) fail('Missing visual separation for sales login entry');
 const securityChecks = [
   ['Password uses PBKDF2', customerAuth, "name:'PBKDF2'"],
   ['Password uses SHA-256', customerAuth, "hash:'SHA-256'"],
