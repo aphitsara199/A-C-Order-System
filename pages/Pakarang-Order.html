@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ใบสั่งซื้อ | ปะการังซัพพลาย</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs" type="module"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="../assets/data/product-catalog.js"></script>
+  
+  <link rel="stylesheet" href="../css/Pakarang-Order.css">
+</head>
+<body>
+<main class="page"><section class="card">
+  <div class="company-toolbar"><a id="sales-order-back" href="A-C-Sales-Dashboard.html" style="align-self:end;padding:10px 14px;border:1px solid #075c70;border-radius:8px;background:#fff;color:#075c70;font-size:12px;font-weight:800;text-decoration:none">← กลับไปรายการใบสั่งซื้อ</a><label><span>เลือกบริษัท</span><select id="company-select"></select></label><button id="add-company" type="button">＋ เพิ่มบริษัท</button><button id="edit-company" class="edit-company" type="button">✎ แก้ไขบริษัท</button><button id="delete-company" class="delete-company" type="button">× ลบบริษัท</button></div>
+  <dialog id="company-dialog"><form id="company-form"><div class="dialog-title"><div><small>ตั้งค่าผู้ออกเอกสาร</small><h2>เพิ่มบริษัทใหม่</h2></div><button type="button" id="close-company" aria-label="ปิด">×</button></div><label><span>ชื่อบริษัท / ร้านค้า</span><input id="new-company-name" required placeholder="ชื่อบริษัท"></label><label><span>เบอร์โทรศัพท์</span><input id="new-company-phone" placeholder="โทร: 000-000-0000"></label><label class="wide"><span>LINE</span><input id="new-company-line" placeholder="LINE: @account"></label><label class="wide"><span>ที่อยู่</span><textarea id="new-company-address" placeholder="กรอกที่อยู่บริษัท"></textarea><textarea id="new-company-contact" hidden></textarea></label><label><span>โลโก้บริษัท</span><input id="new-company-logo" type="file" accept="image/*"></label><div class="color-fields"><label><span>สีหลัก</span><input id="new-company-primary" type="color" value="#075c70"></label><label><span>สีรอง</span><input id="new-company-secondary" type="color" value="#18a7a1"></label></div><div class="dialog-actions"><button type="button" id="cancel-company">ยกเลิก</button><button type="submit">บันทึกบริษัท</button></div></form></dialog>
+  <dialog id="delete-company-dialog"><form method="dialog" class="delete-confirm"><div class="dialog-title"><div><small>ยืนยันการลบบริษัท</small><h2>ต้องการลบบริษัทนี้จริงหรือไม่?</h2></div></div><p id="delete-company-name"></p><p class="delete-warning">ข้อมูลบริษัท โลโก้ และสีที่บันทึกไว้จะถูกลบออก</p><div class="dialog-actions"><button value="cancel">ยกเลิก</button><button id="confirm-delete-company" class="danger-button" value="default">ยืนยันลบบริษัท</button></div></form></dialog>
+  <header class="header"><div class="brand"><label class="mark logo-mark" title="คลิกเพื่อเปลี่ยนโลโก้"><img id="company-logo" src="../assets/images/ac-foods-logo.png" alt="โลโก้บริษัท"><input id="company-logo-input" type="file" accept="image/*" hidden></label><div class="brand-details" title="คลิกข้อความเพื่อแก้ไข"><p id="company-name" class="company-name" contenteditable="true">บริษัท ปะการังซัพพลาย จำกัด</p><p id="company-phone" contenteditable="true">โทร: 084-349-9277 / 080-651-1377</p><p id="company-line" contenteditable="true">LINE: @pakarangsupply</p><p id="company-address" contenteditable="true">ที่อยู่:</p></div></div><div class="doc editable-doc"><h2>ใบเสนอราคา</h2><p>เลขที่: <strong id="document-number" contenteditable="true">QT260716-104409</strong></p><p><label for="document-date">วันที่สั่ง:</label> <input id="document-date" type="date" value="2026-07-16"></p><p><label for="arrival-date">วันที่ส่งถึง:</label> <input id="arrival-date" type="date"></p><p><label for="arrival-time">เวลาประมาณ:</label> <input id="arrival-time" type="time"></p></div></header>
+  <section class="customer"><label><select id="customer-type" class="customer-type" aria-label="เลือกประเภทลูกค้า"><option value="ชื่อลูกค้า">ชื่อลูกค้า</option><option value="ชื่อร้าน">ชื่อร้าน</option><option value="บริษัท">บริษัท</option></select><input id="customer-name" value="" placeholder="กรอกชื่อ"></label><label><span>เบอร์โทรศัพท์</span><input id="customer-phone" type="tel" placeholder="(ไม่บังคับ)"></label><label class="full"><span>ที่อยู่จัดส่ง</span><textarea id="customer-address" placeholder="บ้านเลขที่ / ซอย / ถนน / แขวง / เขต / จังหวัด / รหัสไปรษณีย์ (ไม่บังคับ)"></textarea></label></section>
+  <section class="upload-box"><div class="upload-copy"><h3>อัปโหลดใบสั่งซื้อ</h3><p>รองรับไฟล์ PDF ใบสั่งซื้อปะการังซัพพลาย ระบบจะนำสินค้าเข้าตารางอัตโนมัติ</p><div id="upload-status" class="upload-status"></div></div><div class="upload-actions"><button class="report-button" id="save-quotation">✓ บันทึกใบเสนอราคา</button><button class="report-button" id="export-report">▣ สร้างใบเสนอราคา PDF</button><button class="report-button" id="export-excel">▦ สร้างใบเสนอราคา Excel</button><label class="upload-button">⇧ เลือกไฟล์ PDF<input id="po-upload" type="file" accept="application/pdf,.pdf"></label></div></section>
+  <section class="items"><div class="title-row"><div><span class="eyebrow">รายการสินค้า</span><h3>รายละเอียดออเดอร์</h3></div><button class="add" id="add">＋ เพิ่มสินค้า</button></div>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>รหัส</th><th>รายการสินค้า</th><th>จำนวน</th><th>หน่วย</th><th>บาท</th><th>จำนวน</th><th>ราคา</th><th>รวม</th><th>หมายเหตุ</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="bottom"><div></div><div class="summary"><div><span>จำนวนรายการ</span><strong id="count">0 รายการ</strong></div><div class="grand"><span>รวมทั้งสิ้น</span><strong id="grand">฿0.00</strong></div></div></div>
+    <section class="out-stock"><div class="title-row red-title"><div><span class="eyebrow">รายการเพิ่มเติม</span><h3>สินค้าที่ไม่มีในสต๊อก</h3></div><button class="add red-add" id="add-out">＋ เพิ่มสินค้า</button></div><div class="table-wrap red-table"><table><thead><tr><th>#</th><th>รหัส</th><th>รายการสินค้า</th><th>จำนวน</th><th>หน่วย</th><th>บาท</th><th>จำนวน</th><th>ราคา</th><th>รวม</th><th>หมายเหตุ</th><th></th></tr></thead><tbody id="out-rows"></tbody></table></div><div class="out-summary summary"><div><span>จำนวนรายการ</span><strong id="out-count">0 รายการ</strong></div><div class="grand"><span>รวมทั้งสิ้น</span><strong id="out-total">฿0.00</strong></div></div></section>
+    <div class="bottom order-note-wrap"><label class="order-note">หมายเหตุสำหรับออเดอร์<textarea placeholder="กรอกหมายเหตุเพิ่มเติม เช่น วันและเวลานัดรับสินค้า"></textarea></label></div>
+  </section>
+  <section class="notice"><strong>หมายเหตุ:</strong><ul><li>ราคานี้ยังไม่รวม VAT 7%</li><li>สินค้าบางรายการราคาอาจมีการเปลี่ยนแปลง กรุณายืนยันก่อนสั่งซื้อ</li><li>กรุณาติดต่อยืนยันออเดอร์ทาง <span id="notice-company-contact">LINE: @pakarangsupply</span></li></ul></section>
+  <footer><div><strong id="footer-company">บริษัท ปะการังซัพพลาย จำกัด</strong> — <span id="footer-tagline">ใบเสนอราคาสินค้าและบริการ</span></div><span id="footer-contact">LINE: @pakarangsupply</span></footer>
+</section><section id="print-report" class="print-report" aria-hidden="true"></section></main>
+<datalist id="stock-note-options"><option value="ไม่มีในสต๊อก"></option></datalist>
+
+
+
+  <script src="../js/services/api-config.js"></script>
+  <script src="../js/services/api-client.js"></script>
+  <script src="../js/Pakarang-Order.js"></script>
+</body>
+</html>

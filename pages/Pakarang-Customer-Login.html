@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>เข้าสู่ระบบลูกค้า | A AND C FOODS SHOP</title>
+  
+  
+  <link rel="stylesheet" href="../css/Pakarang-Customer-Login.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="brand"><span class="brand-mark"><img src="../assets/images/ac-foods-shop-logo.jpg" alt="A AND C FOODS SHOP"></span></div>
+      <div class="hero-copy"><small class="eyebrow">ORDER PORTAL</small><h1>สั่งวัตถุดิบ<br>ง่ายขึ้นในที่เดียว</h1><p>สร้างใบสั่งซื้อ ตรวจสอบรายการ และติดตามสถานะใบเสนอราคาได้อย่างสะดวก</p><ol class="steps"><li><i>1</i><span><b>สร้างใบสั่งซื้อ</b><small>เลือกรายการและระบุจำนวน</small></span></li><li><i>2</i><span><b>ฝ่ายขายตรวจสอบ</b><small>เช็กราคาและสต็อกสินค้า</small></span></li><li><i>3</i><span><b>รับใบเสนอราคา</b><small>ยืนยันก่อนจัดส่งสินค้า</small></span></li></ol></div>
+      <footer>A AND C FOODS SHOP · วัตถุดิบคุณภาพสำหรับธุรกิจอาหาร</footer>
+    </section>
+    <section class="login-side">
+      <form class="card" id="loginForm">
+        <div class="mobile-brand brand"><span class="brand-mark"><img src="../assets/images/ac-foods-shop-logo.jpg" alt="A AND C FOODS SHOP"></span></div>
+        <small class="overline">CUSTOMER LOGIN</small><h2>A AND C SHOP</h2><p class="intro">เข้าสู่ระบบเพื่อสร้างและติดตามใบสั่งซื้อของคุณ</p>
+        <div class="message" id="message">เข้าสู่ระบบสำเร็จ</div>
+        <label class="field">ชื่อผู้ใช้หรือเบอร์โทรศัพท์<input name="username" autocomplete="username" required placeholder="กรอกชื่อผู้ใช้หรือเบอร์โทรศัพท์"></label>
+        <label class="field">รหัสผ่าน<div class="password"><input id="password" name="password" type="password" autocomplete="current-password" required placeholder="กรอกรหัสผ่าน"><button id="toggle" type="button">แสดง</button></div></label>
+        <div class="options"><label><input type="checkbox" checked> จดจำฉันไว้</label><button id="forgotButton" type="button">ลืมรหัสผ่าน?</button></div>
+        <button class="primary" type="submit">เข้าสู่ระบบ <span>→</span></button>
+        <p class="register">ยังไม่มีบัญชี? <button id="registerButton" type="button">สมัครสมาชิก</button></p>
+        <aside class="help"><b>?</b><span><strong>ต้องการความช่วยเหลือ?</strong><br>โทร 091-760-6423 · A AND C FOODS SHOP</span></aside>
+      </form>
+    </section>
+  </main>
+  
+  <script src="../js/services/api-config.js"></script>
+  <script src="../js/services/api-client.js"></script>
+  <script src="../js/services/customer-auth.js"></script>
+  <script src="../js/Pakarang-Customer-Login.js"></script>
+</body>
+</html>

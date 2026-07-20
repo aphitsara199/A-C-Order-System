@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>สำรองและกู้คืนข้อมูล | A AND C FOODS SHOP</title>
+  <link rel="stylesheet" href="../css/A-C-Data-Backup.css">
+</head>
+<body>
+  <header class="top"><div class="brand"><img src="../assets/images/ac-foods-shop-logo.jpg" alt="A AND C"><span>A AND C FOODS SHOP<br><small>ระบบสำรองข้อมูล</small></span></div><a href="A-C-Sales-Dashboard.html">← กลับหน้าฝ่ายขาย</a></header>
+  <main class="shell">
+    <section class="intro"><small>DATA RECOVERY</small><h1>สำรองและกู้คืนข้อมูล</h1><p>ใช้หน้านี้จาก URL เดิมเพื่อดาวน์โหลดข้อมูล แล้วเปิดหน้านี้จาก URL ใหม่เพื่อนำข้อมูลกลับเข้าไป</p></section>
+    <section class="stats"><div><span>ลูกค้า</span><b id="customerCount">0</b></div><div><span>ใบสั่งซื้อ</span><b id="orderCount">0</b></div><div><span>ใบเสนอราคาแล้ว</span><b id="quotationCount">0</b></div><div><span>บัญชีลูกค้า</span><b id="accountCount">0</b></div></section>
+    <section class="card"><h2>1. ดาวน์โหลดข้อมูลจากระบบเดิม</h2><p>เปิดหน้านี้ด้วย URL ที่เคยใช้วันเสาร์ แล้วกดปุ่มด้านล่าง ไฟล์จะไม่ลบหรือแก้ไขข้อมูลเดิม</p><button id="exportBackup" class="primary">ดาวน์โหลดไฟล์สำรอง JSON</button></section>
+    <section class="card"><h2>2. นำข้อมูลเข้าสู่ระบบปัจจุบัน</h2><p>ระบบจะรวมข้อมูลตามเลขที่ PO และบัญชีลูกค้า ไม่สร้างรายการซ้ำ และเก็บสำเนาข้อมูลปัจจุบันไว้ก่อนนำเข้า</p><label class="file"><input id="importFile" type="file" accept="application/json,.json"><span>เลือกไฟล์สำรอง JSON</span></label><button id="importBackup" class="primary" disabled>ตรวจสอบและนำเข้าข้อมูล</button><div id="fileInfo" class="message"></div></section>
+    <section class="card warning"><h2>Google Cloud</h2><p>โค้ดระบบพร้อมจัดชุดข้อมูลแล้ว แต่ต้องมี Google Cloud Project ID, Billing และสิทธิ์เจ้าของโปรเจกต์ก่อนจึงจะสร้าง Cloud Run และ Firestore ได้อย่างปลอดภัย</p></section>
+  </main>
+  <script src="../js/A-C-Data-Backup.js"></script>
+</body>
+</html>

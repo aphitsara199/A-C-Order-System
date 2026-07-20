@@ -1,0 +1,17 @@
+node_modules/
+tmp/
+output/
+data/
+*.log
+*.bak
+*.backup
+*.pdf
+*.xlsx
+*.xls
+*.csv
+*.zip
+*.tar.gz
+*-backup-*.json
+.env
+.env.*
+!.env.example

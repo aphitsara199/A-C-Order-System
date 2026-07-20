@@ -1,0 +1,11 @@
+{
+  "name": "a-c-order-system",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node api/server.mjs",
+    "dev": "node api/server.mjs",
+    "check": "node tests/check-project.mjs"
+  }
+}

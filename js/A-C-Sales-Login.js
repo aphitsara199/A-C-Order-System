@@ -1,0 +1,1 @@
+document.querySelector('#login').onsubmit=e=>{e.preventDefault();const data=Object.fromEntries(new FormData(e.target));if(data.username!=='sales'||data.password!=='123456'){document.querySelector('#error').style.display='block';return}sessionStorage.setItem('ac-sales-session','active');location.href='A-C-Sales-Dashboard.html'};

@@ -1,0 +1,10 @@
+.git
+.vscode
+node_modules
+tmp
+tests
+docs
+*.log
+*.pdf
+*.xlsx
+*.xls
