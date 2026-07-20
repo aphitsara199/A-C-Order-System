@@ -126,6 +126,8 @@ const dataFlow = [
 ];
 for (const [label,source,needle] of dataFlow) if (!source.includes(needle)) fail(`Broken data flow: ${label}`);
 
+const customerLoginHtml = fs.readFileSync(path.join(root,'pages','Pakarang-Customer-Login.html'),'utf8');
+if (!customerLoginHtml.includes('href="A-C-Sales-Login.html"')) fail('Missing sales login entry on customer login page');
 const securityChecks = [
   ['Password uses PBKDF2', customerAuth, "name:'PBKDF2'"],
   ['Password uses SHA-256', customerAuth, "hash:'SHA-256'"],
